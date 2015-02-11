@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# this pack is valid for apps with a gulpfile.js in the root
+if [ -f $1/gulpfile.js ]; then
+  echo "gulp" && exit 0
+elif [ -f $1/server.js ]; then
+  echo "no" && exit 1
+fi
