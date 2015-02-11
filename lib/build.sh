@@ -1,3 +1,8 @@
+head() {
+  echo ""
+  echo "-----> $*"
+}
+
 assert_json() {
   local file=$1
   if test -f $file; then
