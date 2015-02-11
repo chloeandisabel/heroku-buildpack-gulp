@@ -134,3 +134,47 @@ function build_dependencies() {
     fi
   fi
 }
+
+clean_npm() {
+  info "Cleaning npm artifacts"
+  rm -rf "$build_dir/.node-gyp"
+  rm -rf "$build_dir/.npm"
+}
+
+# Caching
+
+create_cache() {
+  info "Caching results for future builds"
+  mkdir -p $cache_dir/node
+
+  echo `node --version` > $cache_dir/node/node-version
+  echo `npm --version` > $cache_dir/node/npm-version
+
+  if test -d $build_dir/node_modules; then
+    cp -r $build_dir/node_modules $cache_dir/node
+  fi
+}
+
+clean_cache() {
+  info "Cleaning previous cache"
+  rm -rf "$cache_dir/node_modules" # (for apps still on the older caching strategy)
+  rm -rf "$cache_dir/node"
+}
+
+get_cache_status() {
+  local node_version=`node --version`
+  local npm_version=`npm --version`
+
+  # Did we bust the cache?
+  if ! $modules_cached; then
+    echo "No cache available"
+  elif ! $NODE_MODULES_CACHE; then
+    echo "Cache disabled with NODE_MODULES_CACHE"
+  elif [ "$node_previous" != "" ] && [ "$node_version" != "$node_previous" ]; then
+    echo "Node version changed ($node_previous => $node_version); invalidating cache"
+  elif [ "$npm_previous" != "" ] && [ "$npm_version" != "$npm_previous" ]; then
+    echo "Npm version changed ($npm_previous => $npm_version); invalidating cache"
+  else
+    echo "valid"
+  fi
+}

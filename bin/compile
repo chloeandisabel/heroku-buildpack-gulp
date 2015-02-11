@@ -50,9 +50,6 @@ $build_dir/node_modules/.bin/gulp $TASK
 ####### Finalize the build
 
 head "Finalizing build"
-write_profile
-write_export
 clean_npm
 clean_cache
 create_cache
-build_succeeded
