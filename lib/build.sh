@@ -24,8 +24,31 @@ assert_json() {
   fi
 }
 
+get_modules_source() {
+  local build_dir=$1
+  if test -d $build_dir/node_modules; then
+    echo "prebuilt"
+  elif test -f $build_dir/npm-shrinkwrap.json; then
+    echo "npm-shrinkwrap.json"
+  elif test -f $build_dir/package.json; then
+    echo "package.json"
+  else
+    echo ""
+  fi
+}
+
+get_modules_cached() {
+  local cache_dir=$1
+  if test -d $cache_dir/node/node_modules; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
+
 read_current_state() {
   info "package.json..."
+  ls $build_dir
   assert_json "$build_dir/package.json"
   iojs_engine=$(read_json "$build_dir/package.json" ".engines.iojs")
   node_engine=$(read_json "$build_dir/package.json" ".engines.node")
