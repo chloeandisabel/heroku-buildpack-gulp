@@ -48,6 +48,7 @@ get_modules_cached() {
 
 read_current_state() {
   info "package.json..."
+  info 'changes!'
   ls $build_dir
   assert_json "$build_dir/package.json"
   iojs_engine=$(read_json "$build_dir/package.json" ".engines.iojs")
