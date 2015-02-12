@@ -1,3 +1,9 @@
+error() {
+  echo " !     $*" >&2
+  echo ""
+  return 1
+}
+
 head() {
   echo ""
   echo "-----> $*"
