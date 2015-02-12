@@ -17,6 +17,7 @@ info() {
 assert_json() {
   local file=$1
   if test -f $file; then
+    cat $file
     if ! cat $file | $bp_dir/vendor/jq '.' > /dev/null; then
       error "Unable to parse $file as JSON"
     fi
