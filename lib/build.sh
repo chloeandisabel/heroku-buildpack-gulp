@@ -17,7 +17,6 @@ info() {
 assert_json() {
   local file=$1
   if test -f $file; then
-    cat $file
     if ! cat $file | $bp_dir/vendor/jq '.' > /dev/null; then
       error "Unable to parse $file as JSON"
     fi
@@ -48,8 +47,6 @@ get_modules_cached() {
 
 read_current_state() {
   info "package.json..."
-  info 'changes!'
-  ls $build_dir
   assert_json "$build_dir/package.json"
   iojs_engine=$(read_json "$build_dir/package.json" ".engines.iojs")
   node_engine=$(read_json "$build_dir/package.json" ".engines.node")
