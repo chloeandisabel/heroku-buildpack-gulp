@@ -63,7 +63,6 @@ read_current_state() {
   npm_engine=$(read_json "$build_dir/package.json" ".engines.npm")
 
   info "build directory..."
-  start_method=$(get_start_method "$build_dir")
   modules_source=$(get_modules_source "$build_dir")
 
   info "cache directory..."
@@ -86,7 +85,6 @@ show_current_state() {
     info "Node engine:         $iojs_engine (iojs)"
   fi
   info "Npm engine:          ${npm_engine:-unspecified}"
-  info "Start mechanism:     ${start_method:-none}"
   info "node_modules source: ${modules_source:-none}"
   info "node_modules cached: $modules_cached"
   echo ""
