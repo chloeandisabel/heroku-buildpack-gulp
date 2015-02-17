@@ -42,6 +42,13 @@ fi
 install_npm
 
 
+####### Build the project's dependencies
+
+head "Building dependencies"
+cd $build_dir
+build_dependencies
+
+
 ####### Run Gulp build task
 
 $build_dir/node_modules/.bin/gulp $TASK
