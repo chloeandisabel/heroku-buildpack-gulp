@@ -23,6 +23,16 @@ assert_json() {
   fi
 }
 
+read_json() {
+  local file=$1
+  local node=$2
+  if test -f $file; then
+    cat $file | $bp_dir/vendor/jq --raw-output "$node // \"\"" || return 1
+  else
+    echo ""
+  fi
+}
+
 get_modules_source() {
   local build_dir=$1
   if test -d $build_dir/node_modules; then
