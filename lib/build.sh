@@ -14,6 +14,14 @@ info() {
   echo "       $*"
 }
 
+file_contents() {
+  if test -f $1; then
+    echo "$(cat $1)"
+  else
+    echo ""
+  fi
+}
+
 assert_json() {
   local file=$1
   if test -f $file; then
